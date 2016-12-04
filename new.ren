@@ -1,0 +1,61 @@
+Camera
+	CameraPos .5 3.5 -5
+	CameraView 1.5708 -.3
+Light
+	Ambient 20 20 20
+	Point
+		Pos -2.5 4 -1.5
+		Hue 100 50 50
+	Point
+		Pos 2.5 4 -1.5
+		Hue 50 50 100
+	Point
+		Pos .5 3.5 -5
+		Hue 50 50 50
+EndLight
+ObjectList
+	Tri 
+		Vertex -1 0 1
+		Vertex 1 0 1
+		Vertex -1 0 -1
+		Color 255 0 0 0 0
+	Tri
+		Vertex -1 0 -1
+		Vertex 1 0 -1
+		Vertex 1 0 1
+		Color 255 0 0 0 0
+	Tri
+		Vertex 0 1 -1
+		Vertex 0 1 1
+		Vertex 0 -1 1
+		Color 0 255 0 100 0
+	Tri
+		Vertex 0 1 -1
+		Vertex 0 -1 -1
+		Vertex 0 -1 1
+		Color 0 255 0 100 0
+	Tri
+		Vertex 1 1 0
+		Vertex 1 -1 0
+		Vertex -1 -1 0
+		Color 0 0 255 0 0 
+	Tri
+		Vertex 1 1 0
+		Vertex -1 1 0
+		Vertex -1 -1 0
+		Color 0 0 255 0 0
+	Tri
+		Vertex 0 -2 -4
+		Vertex 100 -2 10
+		Vertex -100 -2 10
+		Color 255 255 255 0 0
+	Tri
+		Vertex 3 3 3
+		Vertex 4 -2 3
+		Vertex 5 0 0 
+		Color 0 0 255 200 200
+	Sphere
+		Origin -1 1 1
+		Radius .6
+		Color 255 255 255 0 0
+EndObjectList

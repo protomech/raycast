@@ -1,0 +1,19 @@
+Camera
+	CameraPos 0 0 -4
+	CameraView 1.5708 0
+
+Light
+	Ambient 0 0 0 
+EndLight
+
+ObjectList
+	Tri
+		Vertex 0 3 0
+		Vertex -2 -2 0
+		Vertex 2 -2 0
+		Color 50 50 100 0 0
+	Sphere
+		Origin 0 0 0
+		Radius 2
+		Color 100 100 200 0 0 
+EndObjectList
