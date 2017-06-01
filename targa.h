@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <iostream.h>
+#include <iostream>
 #include <stdlib.h>
 #include <string.h>
 
@@ -41,7 +41,7 @@ tex_list * tex_list_member(char *fname, tex_list *head) {
 	tex_list * t = head;
 	
 	while (t != NULL) {
-		if (!stricmp(fname,t->filename))
+		if (!strncasecmp(fname,t->filename,32))
 			return t;
 		t = t->next;
 	}
@@ -68,7 +68,7 @@ texture read_targa(char * filename) {
 	FILE *in;
 	
 	if ((in = fopen(filename,"rb")) == NULL) {
-		cout << "file error: " << filename << endl;
+		std::cout << "file error: " << filename << std::endl;
 		return texture();
 	}
 	
@@ -93,8 +93,8 @@ texture read_targa(char * filename) {
 /*	bit pattern 76543210
 			  ^^			data storage interleaving flag - ignored
 			    ^		screen origin bit - 0 lower left, 1 upper left
-			     ^		reserved - must be 0.
-			      ^^^^	attribute bits.  for Targa 24, should be 0.
+				^		reserved - must be 0.
+				 ^^^^	attribute bits.  for Targa 24, should be 0.
 */			
 
 	// image identification field - length given by info in byte 0
@@ -112,20 +112,20 @@ texture read_targa(char * filename) {
 	unsigned int i, j, ptr_pos;
 	rgb_3 * rgb_ptr;
 
-     unsigned char a, b;
+	unsigned char a, b;
 
 	fscanf(in,"%c",&num_chars_in_id_field);
 	fscanf(in,"%c",&color_map_type);
 	fscanf(in,"%c",&image_type_code);
 	
-     fscanf(in,"%c%c",&a,&b); color_map_origin = a + (unsigned int)b*256;
-     fscanf(in,"%c%c",&a,&b); color_map_length = a + (unsigned int)b*256;
+	fscanf(in,"%c%c",&a,&b); color_map_origin = a + (unsigned int)b*256;
+	fscanf(in,"%c%c",&a,&b); color_map_length = a + (unsigned int)b*256;
 	fscanf(in,"%c",&color_map_entry_size);
 
-     fscanf(in,"%c%c",&a,&b); x_origin     = a + (unsigned int)b*256;
-     fscanf(in,"%c%c",&a,&b); y_origin     = a + (unsigned int)b*256;
-     fscanf(in,"%c%c",&a,&b); image_width  = a + (unsigned int)b*256;
-     fscanf(in,"%c%c",&a,&b); image_height = a + (unsigned int)b*256;
+	fscanf(in,"%c%c",&a,&b); x_origin	= a + (unsigned int)b*256;
+	fscanf(in,"%c%c",&a,&b); y_origin	= a + (unsigned int)b*256;
+	fscanf(in,"%c%c",&a,&b); image_width  = a + (unsigned int)b*256;
+	fscanf(in,"%c%c",&a,&b); image_height = a + (unsigned int)b*256;
 	fscanf(in,"%c",&image_pixel_size);
 	fscanf(in,"%c",&image_descriptor_byte);
 	

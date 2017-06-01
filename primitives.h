@@ -5,30 +5,30 @@
 
 struct vector {
 	float x, y, z;
-     vector (void) : x(0),y(0),z(0) { }
+	vector (void) : x(0),y(0),z(0) { }
 	vector (float x_, float y_, float z_) :
-     	x(x_),y(y_),z(z_) { }
+		x(x_),y(y_),z(z_) { }
 };
 
 struct ray {
 	vector origin, trace;
 	ray (void) : origin(),trace() { }
-     ray (vector o, vector t) :
-     	origin(o),trace(t) { }
+	ray (vector o, vector t) :
+		origin(o),trace(t) { }
 };
 
 struct triangle {
 	vector p1, p2, p3;
 	triangle(void) : p1(), p2(), p3() { }
-     triangle(vector a, vector b, vector c) :
-     	p1(a),p2(b),p3(c) { }
+	triangle(vector a, vector b, vector c) :
+		p1(a),p2(b),p3(c) { }
 };
 
 struct plane {
 	vector origin, trace1, trace2;
 	plane(void) : origin(), trace1(), trace2() { }
-     plane(vector o, vector t1, vector t2) :
-     	origin(o), trace1(t1), trace2(t2) { }
+	plane(vector o, vector t1, vector t2) :
+		origin(o), trace1(t1), trace2(t2) { }
 };
 
 
@@ -45,7 +45,7 @@ float dot_product(vector a, vector b) {
 vector cross_product(vector a, vector b) {
 	return vector ((a.y * b.z - a.z * b.y),
     			   	(a.z * b.x - a.x * b.z),
-                 	(a.x * b.y - a.y * b.x));
+			  	(a.x * b.y - a.y * b.x));
 }
 
 vector add_vector(vector a, vector b) {
@@ -57,7 +57,7 @@ vector subtract_vector(vector a, vector b) {
 }
 
 plane tri_to_plane(triangle t) {
-     return plane(t.p1, subtract_vector(t.p2,t.p1), subtract_vector(t.p3,t.p1));
+	return plane(t.p1, subtract_vector(t.p2,t.p1), subtract_vector(t.p3,t.p1));
 }
 
 float magnitude(vector v) {
@@ -78,15 +78,15 @@ vector reflect_vector(vector normal, vector original) {
 
 struct color {
 	unsigned char r,g,b,a,ref;  // red, green, blue, alpha, reflectivity channels
-     color(void) : r(0),g(0),b(0),a(0),ref(0) { }
-     color(unsigned char red, unsigned char green, unsigned char blue) : // rgb triple
-     	r(red),g(green),b(blue),a(0),ref(0) { }
-     color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha, unsigned char reflectivity) : //rgbar pentuple
-     	r(red),g(green),b(blue),a(alpha),ref(reflectivity) { }
+	color(void) : r(0),g(0),b(0),a(0),ref(0) { }
+	color(unsigned char red, unsigned char green, unsigned char blue) : // rgb triple
+		r(red),g(green),b(blue),a(0),ref(0) { }
+	color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha, unsigned char reflectivity) : //rgbar pentuple
+		r(red),g(green),b(blue),a(alpha),ref(reflectivity) { }
 };
 
 color add_color(color a, color b) {
-	int 	sum_r = a.r + b.r,
+	int sum_r = a.r + b.r,
 		sum_g = a.g + b.g,
 		sum_b = a.b + b.b;
 		
@@ -94,25 +94,25 @@ color add_color(color a, color b) {
 }
 
 struct polygon {
-     triangle t;
+	triangle t;
 	color col;
 	vector origin, leg1, leg2;
 	vector normal;
 	texture tex;
 	polygon(void) : 
 		t(),col(),origin(),leg1(),leg2(),normal(),tex() { }
-     polygon(triangle tri, color c) :
-     	t(tri),col(c),origin(tri.p1),
-     	leg1(subtract_vector(tri.p2,tri.p1)),leg2(subtract_vector(tri.p3,tri.p1)),
-     	normal(cross_product(leg1,leg2)),tex() { }
+	polygon(triangle tri, color c) :
+		t(tri),col(c),origin(tri.p1),
+		leg1(subtract_vector(tri.p2,tri.p1)),leg2(subtract_vector(tri.p3,tri.p1)),
+		normal(cross_product(leg1,leg2)),tex() { }
 };
 
 struct node {
 	polygon p;
-     node * next;
-     node(void) : p(),next(NULL) { }
-     node(polygon pol, node *nxt) :
-     	p(pol),next(nxt) { }
+	node * next;
+	node(void) : p(),next(NULL) { }
+	node(polygon pol, node *nxt) :
+		p(pol),next(nxt) { }
 };
 
 struct light {
@@ -137,9 +137,9 @@ struct light_node {
 };
 
 int remove_node(node *source, node *target) {
-//	cout << "delete_node..\n";
+//	std::cout << "delete_node..\n";
 	if (source == NULL) {
-		cout << "Ooops..." << endl;
+		std::cout << "Ooops..." << std::endl;
 		return 0; // shouldn't happen
 	}
 
@@ -159,9 +159,9 @@ int remove_node(node *source, node *target) {
 
 int add_node(node *source, node *target) {
 	node *temp;
-//	cout << "add_node..\n";
+//	std::cout << "add_node..\n";
 	if (source == NULL) {
-		cout << "Ooops..." << endl;
+		std::cout << "Ooops..." << std::endl;
 		return 0;  // shouldn't happen
 	}
 	
@@ -220,61 +220,61 @@ spherical_vector cartesian_to_spherical(vector c) {
 vector intersect(ray r, polygon pol) {
 	plane p(pol.origin,pol.leg1,pol.leg2);
 
-     vector v = subtract_vector(r.origin,p.origin);
-     
+	vector v = subtract_vector(r.origin,p.origin);
+	
 
 /*   this section uses Cramer's Rule to locate a point that represents
 	the intersection of a line and a plane.  Cramer's Rule states that
-                  	a1(x) + b1(y) + c1(z) = d1
-     the system : 	a2(x) + b2(y) + c2(z) = d2
-                    a3(x) + b3(y) + c3(z) = d3
+			   	a1(x) + b1(y) + c1(z) = d1
+	the system : 	a2(x) + b2(y) + c2(z) = d2
+				a3(x) + b3(y) + c3(z) = d3
 
-     x = D1/D, y = D2/D, z = D3/D
+	x = D1/D, y = D2/D, z = D3/D
 
-               |a1 b1 c1|       |d1 b1 c1|       |a1 d1 c1|       |a1 b1 d1|
-     where D = |a2 b2 c2|, D1 = |d2 b2 c2|, D2 = |a2 d2 c2|, D3 = |a2 b2 d2|
-               |a3 b3 c3|       |d3 b3 c3|       |a3 d3 c3|       |a3 b3 d3|
+			|a1 b1 c1|	  |d1 b1 c1|	  |a1 d1 c1|	  |a1 b1 d1|
+	where D = |a2 b2 c2|, D1 = |d2 b2 c2|, D2 = |a2 d2 c2|, D3 = |a2 b2 d2|
+			|a3 b3 c3|	  |d3 b3 c3|	  |a3 d3 c3|	  |a3 b3 d3|
 */
 
 	float D =    -(p.trace1.x * p.trace2.y * r.trace.z  +
-     			p.trace2.x * r.trace.y  * p.trace1.z +
-                    r.trace.x  * p.trace1.y * p.trace2.z -
-                    r.trace.x  * p.trace2.y * p.trace1.z -
-                    p.trace2.x * p.trace1.y * r.trace.z  -
-                    p.trace1.x * r.trace.y  * p.trace2.z );
+				p.trace2.x * r.trace.y  * p.trace1.z +
+				r.trace.x  * p.trace1.y * p.trace2.z -
+				r.trace.x  * p.trace2.y * p.trace1.z -
+				p.trace2.x * p.trace1.y * r.trace.z  -
+				p.trace1.x * r.trace.y  * p.trace2.z );
 
 	if (D == 0) return vector(0,0,0); // no intersection
 
 	float D1 =   -(v.x		 * p.trace2.y * r.trace.z  +
-     			p.trace2.x * r.trace.y  * v.z        +
-                    r.trace.x  * v.y        * p.trace2.z -
-                    r.trace.x  * p.trace2.y * v.z        -
-                    p.trace2.x * v.y        * r.trace.z  -
-                    v.x  	 * r.trace.y  * p.trace2.z );
+				p.trace2.x * r.trace.y  * v.z	   +
+				r.trace.x  * v.y	   * p.trace2.z -
+				r.trace.x  * p.trace2.y * v.z	   -
+				p.trace2.x * v.y	   * r.trace.z  -
+				v.x  	 * r.trace.y  * p.trace2.z );
 
-	float D2 =   -(p.trace1.x * v.y        * r.trace.z  +
-     			v.x        * r.trace.y  * p.trace1.z +
-                    r.trace.x  * p.trace1.y * v.z        -
-                    r.trace.x  * v.y        * p.trace1.z -
-                    v.x        * p.trace1.y * r.trace.z  -
-                    p.trace1.x * r.trace.y  * v.z        );
+	float D2 =   -(p.trace1.x * v.y	   * r.trace.z  +
+				v.x	   * r.trace.y  * p.trace1.z +
+				r.trace.x  * p.trace1.y * v.z	   -
+				r.trace.x  * v.y	   * p.trace1.z -
+				v.x	   * p.trace1.y * r.trace.z  -
+				p.trace1.x * r.trace.y  * v.z	   );
 
 	if ((D2/D + D1/D > 1.0) || (D2/D < 0) || (D1/D < 0))
 		return vector(0,0,0);		// intersection is outside triangle
 
 
-     float D3 =   -(p.trace1.x * p.trace2.y * v.z        +
-     			p.trace2.x * v.y        * p.trace1.z +
-                    v.x        * p.trace1.y * p.trace2.z -
-                    v.x        * p.trace2.y * p.trace1.z -
-                    p.trace2.x * p.trace1.y * v.z        -
-                    p.trace1.x * v.y        * p.trace2.z );
-                    
-     vector return_vector = add_vector(r.origin,scalar_multiply(r.trace,-D3/D));
-     vector connecting_vector = subtract_vector(return_vector,r.origin);
-     
-     if (connecting_vector.x/r.trace.x < 0 || connecting_vector.y/r.trace.y < 0 || connecting_vector.z/r.trace.z < 0)
-     	return vector(0,0,0);
-                    
+	float D3 =   -(p.trace1.x * p.trace2.y * v.z	   +
+				p.trace2.x * v.y	   * p.trace1.z +
+				v.x	   * p.trace1.y * p.trace2.z -
+				v.x	   * p.trace2.y * p.trace1.z -
+				p.trace2.x * p.trace1.y * v.z	   -
+				p.trace1.x * v.y	   * p.trace2.z );
+				
+	vector return_vector = add_vector(r.origin,scalar_multiply(r.trace,-D3/D));
+	vector connecting_vector = subtract_vector(return_vector,r.origin);
+	
+	if (connecting_vector.x/r.trace.x < 0 || connecting_vector.y/r.trace.y < 0 || connecting_vector.z/r.trace.z < 0)
+		return vector(0,0,0);
+				
  	return return_vector;
 }
