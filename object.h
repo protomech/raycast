@@ -1,5 +1,5 @@
 #include "primitives.h"
-#include <iostream.h>
+#include <iostream>
 
 enum ObjectType {tri,quad,sphere};
 
@@ -45,7 +45,7 @@ Primitive::Primitive(ObjectType t, vector p1, vector p2, vector p3, color c) {
 		Color = c;
 	}
 	else 
-		cout << "Invalid Primitive declaration.";
+		std::cout << "Invalid Primitive declaration.";
 }
 	
 Primitive::Primitive(ObjectType t, vector p1, vector p2, vector p3, vector p4, color c) {
@@ -58,7 +58,7 @@ Primitive::Primitive(ObjectType t, vector p1, vector p2, vector p3, vector p4, c
 		Color = c;
 	}
 	else 
-		cout << "Invalid Primitive declaration.";
+		std::cout << "Invalid Primitive declaration.";
 }
 
 Primitive::Primitive(ObjectType t, vector origin, double radius, color c) {
@@ -69,7 +69,7 @@ Primitive::Primitive(ObjectType t, vector origin, double radius, color c) {
 		Color = c;
 	}
 	else 
-		cout << "Invalid Primitive declaration.";
+		std::cout << "Invalid Primitive declaration.";
 }
 
 vector Primitive::Intersect(ray r) {
@@ -106,7 +106,7 @@ vector Primitive::Intersect(ray r) {
 			if (m > 0) return add_vector(r.origin,scalar_multiply(r.trace,m));
 			else return vector(0,0,0);
 		}
-		default: cout << "Undefined type in Primitive::Intersect\n";
+		default: std::cout << "Undefined type in Primitive::Intersect\n";
 	}
 	
 	return vector();
@@ -117,7 +117,7 @@ vector Primitive::Normal(vector intersection) {
 		case tri: return cross_product(subtract_vector(Point2,Point1),subtract_vector(Point3,Point1));
 		case quad: return cross_product(subtract_vector(Point2,Point1),subtract_vector(Point3,Point1));
 		case sphere: return normalize(subtract_vector(intersection,Origin));
-		default: cout << "Undefined type in Primitive::Normal\n";
+		default: std::cout << "Undefined type in Primitive::Normal\n";
 	}
 }
 		
@@ -134,31 +134,31 @@ color Primitive::ColorAt(vector v) {	// FIXME: this will have to be changed when
 void Primitive::Print() {
 	switch (type) {
 		case tri: {
-			cout << "Triangle" << endl
-				<< "  Point1: (" << Point1.x << "," << Point1.y << "," << Point1.z << ")" << endl
-				<< "  Point2: (" << Point2.x << "," << Point2.y << "," << Point2.z << ")" << endl
-				<< "  Point3: (" << Point3.x << "," << Point3.y << "," << Point3.z << ")" << endl
-				<< "  Color:  " << (int)Color.r << " " << (int)Color.g << " " << (int)Color.b << " " << (int)Color.a << " " << (int)Color.ref << endl;
+			std::cout << "Triangle" << std::endl
+				<< "  Point1: (" << Point1.x << "," << Point1.y << "," << Point1.z << ")" << std::endl
+				<< "  Point2: (" << Point2.x << "," << Point2.y << "," << Point2.z << ")" << std::endl
+				<< "  Point3: (" << Point3.x << "," << Point3.y << "," << Point3.z << ")" << std::endl
+				<< "  Color:  " << (int)Color.r << " " << (int)Color.g << " " << (int)Color.b << " " << (int)Color.a << " " << (int)Color.ref << std::endl;
 			break;
 		}
 		case quad: {
-			cout << "Quadrangle" << endl
-				<< "  Point1: (" << Point1.x << "," << Point1.y << "," << Point1.z << ")" << endl
-				<< "  Point2: (" << Point2.x << "," << Point2.y << "," << Point2.z << ")" << endl
-				<< "  Point3: (" << Point3.x << "," << Point3.y << "," << Point3.z << ")" << endl
-				<< "  Point4: (" << Point4.x << "," << Point4.y << "," << Point4.z << ")" << endl
-				<< "  Color:  " << (int)Color.r << " " << (int)Color.g << " " << (int)Color.b << " " << (int)Color.a << " " << (int)Color.ref << endl;
+			std::cout << "Quadrangle" << std::endl
+				<< "  Point1: (" << Point1.x << "," << Point1.y << "," << Point1.z << ")" << std::endl
+				<< "  Point2: (" << Point2.x << "," << Point2.y << "," << Point2.z << ")" << std::endl
+				<< "  Point3: (" << Point3.x << "," << Point3.y << "," << Point3.z << ")" << std::endl
+				<< "  Point4: (" << Point4.x << "," << Point4.y << "," << Point4.z << ")" << std::endl
+				<< "  Color:  " << (int)Color.r << " " << (int)Color.g << " " << (int)Color.b << " " << (int)Color.a << " " << (int)Color.ref << std::endl;
 			break;
 		}
 		case sphere: {
-			cout << "Sphere" << endl
-				<< "  Origin: (" << Origin.x << "," << Origin.y << "," << Origin.z << ")" << endl
-				<< "  Radius: " << Radius << endl
-				<< "  Color:  " << (int)Color.r << " " << (int)Color.g << " " << (int)Color.b << " " << (int)Color.a << " " << (int)Color.ref << endl;
+			std::cout << "Sphere" << std::endl
+				<< "  Origin: (" << Origin.x << "," << Origin.y << "," << Origin.z << ")" << std::endl
+				<< "  Radius: " << Radius << std::endl
+				<< "  Color:  " << (int)Color.r << " " << (int)Color.g << " " << (int)Color.b << " " << (int)Color.a << " " << (int)Color.ref << std::endl;
 			break;
 		}
 		default: {
-			cout << "Type Unknown (FIX!)" << endl;
+			std::cout << "Type Unknown (FIX!)" << std::endl;
 		}
 	}
 }
